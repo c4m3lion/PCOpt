@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[61]:
+# In[64]:
 
 
 import tkinter as tk
 import os;
 import glob
 import stat
+import sys
+import shutil
 
 
 root= tk.Tk()
@@ -24,7 +26,7 @@ def clean ():
             print('PermissionError do change')
             os.chmod(f, stat.S_IWRITE)
             try:
-                os.remove(f)
+                shutil.rmtree(f)
             except OSError as e:
                 print("Error: %s : %s" % (f, e.strerror))
     
