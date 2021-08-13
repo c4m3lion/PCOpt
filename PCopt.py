@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[11]:
+# In[18]:
 
 
 import tkinter as tk
@@ -13,9 +13,14 @@ import shutil
 
 
 root= tk.Tk()
-root.geometry('350x200');
+root.geometry('600x300');
 root.configure(background='black');
 root.title("Clean PC")
+
+def debugger(txt):
+    label1 = tk.Label(root, text= txt, fg='green', font=('helvetica', 12, 'bold'))
+    label1.after(5000, label1.destroy)
+    label1.pack()
 
 def clean ():  
     files = glob.glob('C:/Users/c4m3lion/AppData/Local/Temp/*')
@@ -31,18 +36,13 @@ def clean ():
                 shutil.rmtree(f) #try to remove folder
             except OSError as e:
                 print("Error: %s : %s" % (f, e.strerror))
-    
-    label1 = tk.Label(root, text= 'AYE PC cleaned succesfully', fg='green', font=('helvetica', 12, 'bold'))
-    label1.after(5000, label1.destroy)
-    label1.pack()
+    debugger('AYE PC cleaned succesfully');
 
 #open explorer.exe
 def openExplorer():
     os.system('start explorer.exe');
-    
-    label1 = tk.Label(root, text= 'Explorere restored', fg='green', font=('helvetica', 12, 'bold'))
-    label1.after(5000, label1.destroy)
-    label1.pack()    
+    debugger('Explorere restored');
+      
 
 #delete edge
 def deleteEdge():
@@ -51,9 +51,16 @@ def deleteEdge():
     for f in files:
         if(f[len(f)-1] >='0' and f[len(f)-1] <='9'):
             f+="\Installer";
-            print("edge found on this directory: " + f);
-            os.chdir(f);
-            os.system('start cmd /k setup --uninstall --force-uninstall --system-level')
+            debugger("edge found on this directory: ");
+            debugger(f);
+            if len(os.listdir(f) ) == 0:
+                debugger("bu edge is uninstalled already!");
+            else:    
+                debugger("Uninstalling!!!")
+                
+                os.chdir(f);
+                os.system('start cmd /k setup --uninstall --force-uninstall --system-level')
+            
             
             
     
@@ -64,7 +71,7 @@ tk.Button(root, text="Delete Edge", command=deleteEdge).pack()
 root.mainloop()
 
 
-# In[60]:
+# In[ ]:
 
 
 
